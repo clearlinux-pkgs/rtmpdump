@@ -1,2 +1,3 @@
 mkdir -p ${buildroot}/usr/lib64
 mv %{buildroot}/usr/lib/librtmp.so* %{buildroot}/usr/lib64/
+sed -i 's|libdir=/usr/lib|libdir=/usr/lib64|' %{buildroot}/usr/lib64/pkgconfig/librtmp.pc
