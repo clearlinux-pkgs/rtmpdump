@@ -4,18 +4,17 @@
 #
 Name     : rtmpdump
 Version  : 1
-Release  : 1
+Release  : 2
 URL      : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Source0  : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Summary  : RTMP implementation
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: rtmpdump-bin = %{version}-%{release}
+Requires: rtmpdump-lib = %{version}-%{release}
 Requires: rtmpdump-license = %{version}-%{release}
-Requires: rtmpdump-plugins = %{version}-%{release}
 BuildRequires : gmp-dev
 BuildRequires : gnutls-dev
-BuildRequires : openssl-dev
 BuildRequires : pkgconfig(zlib)
 BuildRequires : zlib-dev
 Patch1: 0001-Fix-build.patch
@@ -42,6 +41,7 @@ bin components for the rtmpdump package.
 %package dev
 Summary: dev components for the rtmpdump package.
 Group: Development
+Requires: rtmpdump-lib = %{version}-%{release}
 Requires: rtmpdump-bin = %{version}-%{release}
 Provides: rtmpdump-devel = %{version}-%{release}
 Requires: rtmpdump = %{version}-%{release}
@@ -50,20 +50,21 @@ Requires: rtmpdump = %{version}-%{release}
 dev components for the rtmpdump package.
 
 
+%package lib
+Summary: lib components for the rtmpdump package.
+Group: Libraries
+Requires: rtmpdump-license = %{version}-%{release}
+
+%description lib
+lib components for the rtmpdump package.
+
+
 %package license
 Summary: license components for the rtmpdump package.
 Group: Default
 
 %description license
 license components for the rtmpdump package.
-
-
-%package plugins
-Summary: plugins components for the rtmpdump package.
-Group: Default
-
-%description plugins
-plugins components for the rtmpdump package.
 
 
 %prep
@@ -75,7 +76,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1559863251
+export SOURCE_DATE_EPOCH=1559863499
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -88,12 +89,16 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1559863251
+export SOURCE_DATE_EPOCH=1559863499
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/rtmpdump
 cp COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/COPYING
 cp librtmp/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/librtmp_COPYING
 %make_install
+## install_append content
+mkdir -p ${buildroot}/usr/lib64
+mv %{buildroot}/usr/lib/librtmp.so.1 %{buildroot}/usr/lib64/librtmp.so.1
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -117,11 +122,11 @@ cp librtmp/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/librtmp_COPY
 /usr/lib/librtmp.so
 /usr/lib64/pkgconfig/librtmp.pc
 
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/librtmp.so.1
+
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/rtmpdump/COPYING
 /usr/share/package-licenses/rtmpdump/librtmp_COPYING
-
-%files plugins
-%defattr(-,root,root,-)
-/usr/lib/librtmp.so.1
