@@ -1,0 +1,7 @@
+libc.so.6
+libgmp.so.10
+libgnutls.so.30
+libhogweed.so.4
+libnettle.so.6
+libpthread.so.0
+libz.so.1

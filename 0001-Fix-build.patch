@@ -1,0 +1,60 @@
+From 9286b0313e3cd0c821ea3d3cce2ad8af84f39a22 Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Thu, 6 Jun 2019 16:18:29 -0700
+Subject: [PATCH] Fix build.
+
+---
+ Makefile         | 6 +++---
+ librtmp/Makefile | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index a1595a8..9ff9701 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=/usr
+ 
+ CC=$(CROSS_COMPILE)gcc
+ LD=$(CROSS_COMPILE)ld
+@@ -8,9 +8,9 @@ LD=$(CROSS_COMPILE)ld
+ SYS=posix
+ #SYS=mingw
+ 
+-CRYPTO=OPENSSL
++#CRYPTO=OPENSSL
+ #CRYPTO=POLARSSL
+-#CRYPTO=GNUTLS
++CRYPTO=GNUTLS
+ LIBZ=-lz
+ LIB_GNUTLS=-lgnutls -lhogweed -lnettle -lgmp $(LIBZ)
+ LIB_OPENSSL=-lssl -lcrypto $(LIBZ)
+diff --git a/librtmp/Makefile b/librtmp/Makefile
+index 2c1c790..e3f5baf 100644
+--- a/librtmp/Makefile
++++ b/librtmp/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=/usr
+ 
+ incdir=$(prefix)/include/librtmp
+ bindir=$(prefix)/bin
+@@ -16,8 +16,8 @@ LD=$(CROSS_COMPILE)ld
+ AR=$(CROSS_COMPILE)ar
+ 
+ SYS=posix
+-CRYPTO=OPENSSL
+-#CRYPTO=GNUTLS
++#CRYPTO=OPENSSL
++CRYPTO=GNUTLS
+ DEF_POLARSSL=-DUSE_POLARSSL
+ DEF_OPENSSL=-DUSE_OPENSSL
+ DEF_GNUTLS=-DUSE_GNUTLS
+-- 
+2.21.0
+

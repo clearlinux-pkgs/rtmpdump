@@ -1,0 +1,6 @@
+1
+gmp-dev
+gnutls-dev
+openssl-dev
+pkgconfig(zlib)
+zlib-dev
