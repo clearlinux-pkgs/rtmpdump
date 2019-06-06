@@ -1,2 +1,2 @@
 mkdir -p ${buildroot}/usr/lib64
-mv %{buildroot}/usr/lib/librtmp.so.1 %{buildroot}/usr/lib64/librtmp.so.1
+mv %{buildroot}/usr/lib/librtmp.so* %{buildroot}/usr/lib64/

@@ -4,7 +4,7 @@
 #
 Name     : rtmpdump
 Version  : 1
-Release  : 2
+Release  : 3
 URL      : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Source0  : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Summary  : RTMP implementation
@@ -76,7 +76,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1559863499
+export SOURCE_DATE_EPOCH=1559863664
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -89,7 +89,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1559863499
+export SOURCE_DATE_EPOCH=1559863664
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/rtmpdump
 cp COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/COPYING
@@ -97,7 +97,7 @@ cp librtmp/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/librtmp_COPY
 %make_install
 ## install_append content
 mkdir -p ${buildroot}/usr/lib64
-mv %{buildroot}/usr/lib/librtmp.so.1 %{buildroot}/usr/lib64/librtmp.so.1
+mv %{buildroot}/usr/lib/librtmp.so* %{buildroot}/usr/lib64/
 ## install_append end
 
 %files
@@ -119,7 +119,7 @@ mv %{buildroot}/usr/lib/librtmp.so.1 %{buildroot}/usr/lib64/librtmp.so.1
 /usr/include/librtmp/http.h
 /usr/include/librtmp/log.h
 /usr/include/librtmp/rtmp.h
-/usr/lib/librtmp.so
+/usr/lib64/librtmp.so
 /usr/lib64/pkgconfig/librtmp.pc
 
 %files lib
