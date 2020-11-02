@@ -4,7 +4,7 @@
 #
 Name     : rtmpdump
 Version  : 1
-Release  : 4
+Release  : 5
 URL      : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Source0  : http://git.ffmpeg.org/gitweb/rtmpdump.git/snapshot/c5f04a58fc2aeea6296ca7c44ee4734c18401aa3.tar.gz
 Summary  : RTMP implementation
@@ -69,31 +69,32 @@ license components for the rtmpdump package.
 
 %prep
 %setup -q -n rtmpdump-c5f04a5
+cd %{_builddir}/rtmpdump-c5f04a5
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1559864539
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604354719
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1559864539
+export SOURCE_DATE_EPOCH=1604354719
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/rtmpdump
-cp COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/COPYING
-cp librtmp/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/librtmp_COPYING
+cp %{_builddir}/rtmpdump-c5f04a5/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/rtmpdump-c5f04a5/librtmp/COPYING %{buildroot}/usr/share/package-licenses/rtmpdump/6138ce06f16aef800693fb256090749acbabd038
 %make_install
 ## install_append content
 mkdir -p ${buildroot}/usr/lib64
@@ -129,5 +130,5 @@ sed -i 's|libdir=/usr/lib|libdir=/usr/lib64|' %{buildroot}/usr/lib64/pkgconfig/l
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/rtmpdump/COPYING
-/usr/share/package-licenses/rtmpdump/librtmp_COPYING
+/usr/share/package-licenses/rtmpdump/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+/usr/share/package-licenses/rtmpdump/6138ce06f16aef800693fb256090749acbabd038
